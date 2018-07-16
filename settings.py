@@ -4,9 +4,6 @@ from shopify_settings import *
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
-SHOPIFY_API_KEY = 'e7419e336fd63f54567a075d136f3fa1'
-SHOPIFY_API_SECRET = '45c72d8d9cf56e13c9b46c841e24ca8d'
-
 try:
     from djangoappengine.settings_base import *
     USING_APP_ENGINE = True
