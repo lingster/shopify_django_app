@@ -1,6 +1,6 @@
 from django.shortcuts import redirect
-from django.core.urlresolvers import reverse
-from django.conf import settings
+from django.urls import reverse
+
 
 def shop_login_required(func):
     def wrapper(request, *args, **kwargs):
@@ -8,5 +8,6 @@ def shop_login_required(func):
             request.session['return_to'] = request.get_full_path()
             return redirect(reverse('shopify_app.views.login'))
         return func(request, *args, **kwargs)
+
     wrapper.__name__ = func.__name__
     return wrapper

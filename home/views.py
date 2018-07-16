@@ -1,22 +1,26 @@
-from django.shortcuts import render_to_response
-from django.template import RequestContext
 import shopify
+from django.shortcuts import render
+
 from shopify_app.decorators import shop_login_required
 
+
 def welcome(request):
-    return render_to_response('home/welcome.html', {
+    context = {
         'callback_url': "http://%s/login/finalize" % (request.get_host()),
-    }, context_instance=RequestContext(request))
+    }
+    return render(request, 'home/welcome.html', context)
+
 
 @shop_login_required
 def index(request):
     products = shopify.Product.find(limit=3)
     orders = shopify.Order.find(limit=3, order="created_at DESC")
-    return render_to_response('home/index.html', {
+    context = {
         'products': products,
         'orders': orders,
-    }, context_instance=RequestContext(request))
+    }
+    return render(request, 'home/index.html', context)
+
 
 def design(request):
-    return render_to_response('home/design.html', {},
-                              context_instance=RequestContext(request))
+    return render(request, 'home/design.html', {})

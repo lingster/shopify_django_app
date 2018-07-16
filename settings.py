@@ -1,7 +1,11 @@
 import os
+
 from shopify_settings import *
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+
+SHOPIFY_API_KEY = 'e7419e336fd63f54567a075d136f3fa1'
+SHOPIFY_API_SECRET = '45c72d8d9cf56e13c9b46c841e24ca8d'
 
 try:
     from djangoappengine.settings_base import *
@@ -18,7 +22,7 @@ except ImportError:
             'NAME': os.path.join(SITE_ROOT, 'db-development.sqlite3'),
             'USER': '',                      # Not used with sqlite3.
             'PASSWORD': '',                  # Not used with sqlite3.
-            'HOST': '',                      # Set to empty string for localhost. Not used with 
+            'HOST': '',  # Set to empty string for localhost. Not used with
             'PORT': '',                      # Set to empty string for default. Not used with sq
         }
     }
@@ -85,7 +89,7 @@ if not USING_APP_ENGINE:
             'django.core.context_processors.static',
     )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -100,6 +104,30 @@ TEMPLATE_DIRS = (
     os.path.join(SITE_ROOT, 'templates'),
 )
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(os.path.dirname(__file__), 'templates'),
+                 os.path.join(BASE_DIR, '../../templates'),
+                 os.path.join(BASE_DIR, '../templates'),
+                 ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                # 'django.core.context_processors.csrf',
+            ],
+            'builtins': [
+                'django.contrib.staticfiles.templatetags.staticfiles',
+            ],
+        },
+    },
+]
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
