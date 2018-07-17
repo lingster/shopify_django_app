@@ -1,5 +1,6 @@
 import shopify
 from django.shortcuts import render
+from django.conf import settings
 
 from shopify_app.decorators import shop_login_required
 
@@ -18,6 +19,7 @@ def index(request):
     context = {
         'products': products,
         'orders': orders,
+        'SHOPIFY_API_KEY': settings.SHOPIFY_API_KEY,
     }
     return render(request, 'home/index.html', context)
 
